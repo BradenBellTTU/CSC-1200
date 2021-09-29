@@ -1,1 +1,2 @@
-print('hello', end='Hello')
+for x in range(4):
+    print(x)
