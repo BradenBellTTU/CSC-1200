@@ -15,6 +15,20 @@ def menu():
     print("+---------------------------------------+")
     return input("Please make a selection: ")
 
+def paymentProcess(total):
+    print("Your total is $" + ('%.2f' % total))    
+    payment = input("Please enter your payment amount: ")
+    if payment == total:
+        print("Thank you for your purchase, have a good day")
+        print("Change: $0.00")
+        exit()
+    elif payment < total:
+        print("You have not entered a sufficient amount, please restart your order.")
+        exit()
+    else:
+        change = payment - total
+        
+
 def selection(userInput, total):
     if userInput == 1:
         total += 1.50
@@ -27,15 +41,23 @@ def selection(userInput, total):
     elif userInput == 5:
         total += 1.25
     elif userInput == 0:
-        None
+        total += 0
     else:
         print("Invalid input!")
-        sleep(5)
+        sleep(1)
     return total
 
+def main():
+    userInput = None
+    total = 0
+    while userInput != 0:
+        userInput = int(menu())
+        total = selection(userInput, total)
+        if total == 0:
+            print("You did not purchase anything!")
+            print("Goodbye")
+            exit()
+        else:
+            paymentProcess(total)
 
-userInput = None
-while userInput != 0:
-    userInput = int(menu())
-    selection(userInput, 0)
-    
+main()
