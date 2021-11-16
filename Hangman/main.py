@@ -1,3 +1,5 @@
+import random
+import os
 def draw_hang_loser():
     print(" _________     \n")
     print("|         |    \n")
@@ -79,9 +81,10 @@ def draw_hangman(state):
         
         
 def blanks_gone(s):
-  # You must implement this
-  # Look up the find() function for strings
-  return False
+    if s.find("_") == 0:
+        return True
+    elif s.find("_") == -1:
+        return False
 
 def replace_all(orig, working, ch):
   done = False
@@ -96,9 +99,41 @@ def replace_all(orig, working, ch):
       done = True
   return count != 0, orig, working 
   
+
 def main():
-  # You must implement this
+    state = 0
+    losing_state = 6
+    #Had to use this strange work around to get the code to run in VisualStudio Code
+    __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+    sentence = random.choice(open(os.path.join(__location__, 'Words.txt')).read().split()).lower()
+    print(sentence)
+    places = ""
+    for x in sentence:
+        places += "_"
+
+    winner = False
+
+    while winner == False and state != losing_state:
+        print(sentence)
+        draw_hangman(state)
+        print(places)
+        char = input("Enter a character: ")
+        output = replace_all(sentence, places, char)
+        success = output[0]
+        sentence = output[1]
+        places = output[2]
+        if success == False:
+            state += 1
+        if blanks_gone(places) == False:
+            winner = True
     
+    draw_hangman(state)
+    if winner == True:
+        print("CONGRATS! You Win!")
+    else:
+        print("Sorry, you lose :-(")
+        
 main()
+
 
     
