@@ -2,15 +2,19 @@ import os
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 import copy
 
+def clear_screen():
+    for x in range(0, 20):
+        print("\n")
+
 def print_house(h,sr,sc):
-  th = copy.deepcopy(h)
-  th[sr][sc] = "@"
-  for i in th:
-    print(''.join(str(x) for x in i), end='')
+    th = copy.deepcopy(h)
+    th[sr][sc] = "@"
+    for i in th:
+        print(''.join(str(x) for x in i), end='')
 
 def build_house():
     print("Please enter the house file: ")
-    house_file = input()
+    house_file = input("")
     housefp = open(os.path.join(__location__, house_file))
     myhouse = []
     line = housefp.readline()
@@ -58,7 +62,9 @@ def is_door(house, row, col):
 
 def can_unlock(house, unlocked, row, col):
     if unlocked[int(house[row][col]) - 5] == True:
-        return True 
+        return True
+    else:
+        return False
 
 
 def get_key(house, unlocked, row, col):
@@ -78,7 +84,7 @@ def main():
     tcount = 0
     while tcount < num_treasures:
         print_house(house, startrow, startcol)
-        print("N, E, S, W")
+        print("Directions: Use WASD to move")
         command = input("")
         if command == "w" and check_north(house, trow, tcol) == True:
             trow = startrow-1
@@ -101,6 +107,7 @@ def main():
                 print("Sorry, the door is locked! You need to find a key.")
             elif can_unlock(house, unlocked, trow, tcol) == True:
                 print("You unlocked the door.")
+                house[trow][tcol] = " "
                 startrow = trow
                 startcol = tcol
         elif get_key(house, unlocked, trow, tcol) == True:
