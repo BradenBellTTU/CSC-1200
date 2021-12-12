@@ -14,10 +14,6 @@ import os
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 import copy
 
-#Clear screen function
-def clear_screen():
-    for x in range(0, 20):
-        print("\n")
 
 #Prints the house and player position
 def print_house(h,sr,sc):
@@ -150,7 +146,7 @@ def main():
         #Check for win
         if tcount == num_treasures:
             print("Congradulations, you collected all the treasures!")
-
+        
 
 #Execute main()
 main()
